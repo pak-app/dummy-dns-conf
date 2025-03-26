@@ -1,18 +1,18 @@
-# import argparse
 # import json
 import os 
 import sys
+import argparse
 
-# parser = argparse.ArgumentParser(description="Set your Linux DNS automatically.")
+parser = argparse.ArgumentParser(description="Set your Linux DNS automatically.")
 # # Use custom DNS configuration: 
 # parser.add_argument("--file", required=False, help="Path to custom DNS configuration. The JSON config file shold be have one two keys named `nameserver1` and `nameserver2`.")
 # # Use default DNS configuration:
 # parser.add_argument('--default', required=False, help="Use default configuration, currently Shekan is supported.")
 # Reset configuration
-# parser.add_argument('--reset', required=False, help="Reset your DNS configuration.")
+parser.add_argument('--reset', required=False, help="Reset your DNS configuration.")
 # Force reconfigure
 # parser.add_argument('--force-reset', required=False, help="It re-creates and resets your default DNS configurations.")
-# args = parser.parse_args()
+args = parser.parse_args()
 
 DEFAULT_CONF = {
     'shekan': {
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     
     default_conf_dns = None
     
-    with open('./resolv.conf', 'r') as file:
+    with open('/etc/resolv.conf', 'r') as file:
         default_conf_dns = file.readlines()
         file.close()
         
@@ -62,4 +62,3 @@ if __name__ == "__main__":
     with open('./resolv.conf', 'w') as file:
         file.writelines(new_conf)
         file.close()
-    
