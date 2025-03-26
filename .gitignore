@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Cusotm ignore configuration
+
+# Test directory: Ignore test files and directories
+test/
