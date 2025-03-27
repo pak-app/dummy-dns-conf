@@ -4,9 +4,13 @@ printf "Start installing Dummy-DNS package\n"
 # shellcheck disable=SC1091
 # source .venv/bin/activate
 # install requirements
-pip3 install requiremetns.txt
 
-printf "Biulding script...\n"
+if [ $1 ]; then
+    printf "Installing Python packages."
+    pip3 install requiremetns.txt
+fi
+
+printf "Biulding script ...\n"
 pyinstaller --onefile main.py
 
 printf "Copying files...\n" 
