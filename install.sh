@@ -1,9 +1,10 @@
 #!/bin/bash
 
 printf "Start installing Dummy-DNS package\n"
-
 # shellcheck disable=SC1091
-source .venv/bin/activate
+# source .venv/bin/activate
+# install requirements
+pip3 install requiremetns.txt
 
 printf "Biulding script...\n"
 pyinstaller --onefile main.py
