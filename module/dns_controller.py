@@ -1,0 +1,40 @@
+from .dns_handler import DnsHandler
+
+class DnsController:
+    
+    def __init__(self, args):
+        
+        self.args = args
+        self.dns_handler = DnsHandler()
+            
+    def reset_dns(self):
+        self.dns_handler.reset_dns()
+    
+    def force_save_conf(self):
+        self.dns_handler.force_save_conf()
+    
+    def set_custom_conf(self, config_path: str):
+        self.dns_handler.set_custom_conf(config_path)
+    
+    def set_default_conf(self):
+        self.dns_handler.set_default_conf()
+    
+    def check_dummy(self):
+        self.dns_handler.check_dummy()
+    
+    def run(self):
+        
+        if self.args.reset:
+            self.reset_dns()
+        
+        elif self.args.force_reset:
+            self.force_save_conf()
+        
+        elif self.args.default:
+            self.set_default_conf()
+        
+        elif not self.args.config_file == '':
+            self.set_custom_conf(self.args.conf_file)
+        
+        elif self.args.check_dummy:
+            self.check_dummy()

@@ -1,64 +1,73 @@
-# import json
-import os 
-import sys
 import argparse
+from module.dns_controller import DnsController as main
+import os
 
-parser = argparse.ArgumentParser(description="Set your Linux DNS automatically.")
-# # Use custom DNS configuration: 
-# parser.add_argument("--file", required=False, help="Path to custom DNS configuration. The JSON config file shold be have one two keys named `nameserver1` and `nameserver2`.")
-# # Use default DNS configuration:
-# parser.add_argument('--default', required=False, help="Use default configuration, currently Shekan is supported.")
+# Define argument parser
+parser = argparse.ArgumentParser(
+    prog='dummy-dns',
+    description="Set your DNS automatically."
+)
+
+# Use custom DNS configuration: 
+parser.add_argument(
+    '-cf',
+    "--config-file",
+    required=False,
+    type=str,
+    default='',
+    help="Path to custom DNS configuration. The JSON config file shold be have one two keys named `nameserver1` and `nameserver2`.",
+)
+
+# Use default DNS configuration:
+parser.add_argument(
+    '--default', 
+    required=False, 
+    help="Use default configuration, currently Shekan is supported.",
+    action='store_true',
+    # type=bool
+)
+
 # Reset configuration
-parser.add_argument('--reset', required=False, help="Reset your DNS configuration.")
+parser.add_argument(
+    '--reset', 
+    required=False, 
+    help="Reset your DNS configuration.",
+    action='store_true',
+    # type=bool
+)
+
 # Force reconfigure
-# parser.add_argument('--force-reset', required=False, help="It re-creates and resets your default DNS configurations.")
+parser.add_argument(
+    '-fr',
+    '--force-reset', 
+    help="It re-creates and resets your default DNS configurations.",
+    action='store_true',
+    # type=bool
+)
+
+parser.add_argument(
+    '-cd',
+    '--check-dummy',
+    help='Check dns is affected or not.',
+    action='store_true'
+)
+
 args = parser.parse_args()
 
-DEFAULT_CONF = {
-    'shekan': {
-        'nameserver1': '178.22.122.100',
-        'nameserver2': '185.51.200.2'
-    }
-}
-
-def import_config(conf: dict, default_conf_dns: list[str]):
-    
-    name_server_1 = conf['shekan']['nameserver1']
-    name_server_2 = conf['shekan']['nameserver2']
-    
-    for index, line in enumerate(default_conf_dns):
-        
-        if 'dummy-dns' in line:
-            print('dummy-dns is running.')
-            break
-            
-        if 'nameserver' in line:
-            default_conf_dns.insert(index - 1, "# dummy-dns is running\n")
-            default_conf_dns[index] = "# " + line
-            default_conf_dns.insert(index + 1, f'nameserver {name_server_1}\n')
-            default_conf_dns.insert(index + 2, f'nameserver {name_server_2}\n')
-            break
-    
-        
-    
-    return default_conf_dns
 
 if __name__ == "__main__":
-    
-    conf = DEFAULT_CONF.copy()
-    
+
     if os.geteuid() != 0:
-        print("This script must be run as root. Try using sudo.")
-        sys.exit(1)
-    
-    default_conf_dns = None
-    
-    with open('/etc/resolv.conf', 'r') as file:
-        default_conf_dns = file.readlines()
-        file.close()
+        print('Please use sudo before the command.\nexit code 0')
+        exit(0)
         
-    new_conf = import_config(conf, default_conf_dns)
+    app = main(args)
     
-    with open('./resolv.conf', 'w') as file:
-        file.writelines(new_conf)
-        file.close()
+    app.dns_handler.dns_config_path = './test/dummy/config.json'
+    app.dns_handler.app_conf_path = './test/dummy/default_resolv.conf'
+    app.dns_handler.system_conf_path = './test/system/resolv.conf'
+    
+    app.run()
+    
+    
+    
