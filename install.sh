@@ -5,19 +5,14 @@ printf "Start installing Dummy-DNS package\n"
 # source .venv/bin/activate
 # install requirements
 
-if [ $1 ]; then
-    printf "Installing Python packages."
-    pip3 install requiremetns.txt
-fi
-
-printf "Biulding script ...\n"
+printf "Building script ...\n"
 pyinstaller --onefile main.py
 
 printf "Copying files...\n" 
 sudo cp -v -f ./dist/main /usr/local/bin/dummy-dns
 sudo chmod +x /usr/local/bin/dummy-dns
 
-printf "Save default config into /etc/dummy-dns/deafult.conf\n"
+printf "Save default config into /etc/dummy-dns/default.conf\n"
 # Check if /etc/dummy-dns exists or not
 if [ ! -d "/etc/dummy-dns" ]; then
     sudo mkdir /etc/dummy-dns
