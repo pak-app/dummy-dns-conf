@@ -26,7 +26,7 @@ chmod +x install.sh
 
 Note: This tool requires `sudo` permissions because it reads and writes to the system DNS configuration file (`/etc/resolv.conf`).
 
-Here are the available commands and examples (don’t forget to use sudo):
+Here are the available commands and examples (don’t forget to use `sudo`):
 
 ```bash
 dummy-dns --reset # revert system default DNS settings
