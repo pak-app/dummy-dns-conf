@@ -17,6 +17,7 @@ To install, run:
 ```bash
 git clone https://github.com/pak-app/dummy-dns-conf.git
 cd dummy-dns-conf
+pip3 install pyinstaller
 chmod +x install.sh
 ./install.sh
 ```
