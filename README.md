@@ -44,4 +44,4 @@ dummy-dns --unset # Set system default configuration
 
 ## Maintainer
 
-Created and maintained by Poorya.
+Created and maintained by [Poorya](https://github.com/pak-app/).
