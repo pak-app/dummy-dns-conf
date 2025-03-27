@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
     if os.geteuid() != 0:
         print('Please use sudo before the command.\nexit code 0')
-        exit(0)
+        exit()
         
     app = main(args)
     
