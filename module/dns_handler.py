@@ -55,6 +55,14 @@ class DnsHandler:
             file.writelines(content)
             file.close()    
     
+    def _load_config_json(self, path: str) -> tuple:
+        
+        with open(path, 'r') as file:
+            data = json.load(file)
+            file.close()
+            
+            return data['nameserver1'], data['nameserver2']
+        
     def check_dummy(self):
         with open(self.system_conf_path, 'r') as file:
             first_line = file.readline(0)
@@ -72,18 +80,17 @@ class DnsHandler:
         for line_number, line in enumerate(resolv_file_content):
             
             if 'nameserver' in line:
-                resolv_file_content[line_number] = f'# {line}nameserver {nameserver1}\nnameserver {nameserver2}\n'                
+                if '#' in line and 'dummy' in resolv_file_content[0]:
+                    resolv_file_content[line_number + 1] = f'nameserver {nameserver1}\n'
+                    resolv_file_content[line_number + 2] = f'nameserver {nameserver2}\n'
+                
+                else:
+                    resolv_file_content[line_number] = f'# {line}nameserver {nameserver1}\nnameserver {nameserver2}\n'                
+                
                 break
-        
+            
+            
         if not 'dummy' in resolv_file_content[0]:
             resolv_file_content.insert(0, '# dummy is running\n')
-        
+
         self.write_resolv_conf(resolv_file_content)
-        
-    def _load_config_json(self, path: str) -> tuple:
-        
-        with open(path, 'r') as file:
-            data = json.load(file)
-            file.close()
-            
-            return data['nameserver1'], data['nameserver2']
