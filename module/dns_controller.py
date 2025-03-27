@@ -24,7 +24,7 @@ class DnsController:
     
     def run(self):
         
-        if self.args.reset:
+        if self.args.reset or self.args.unset:
             self.reset_dns()
         
         elif self.args.force_reset:

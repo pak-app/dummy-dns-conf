@@ -26,6 +26,15 @@ parser.add_argument(
 #     help="It sets the DNS by given DNS name as input. If you do not give the name it automatically sets the first DNS configuration in /etc/dummy-dns/config.json file."
 # )
 
+# Unset the DNS
+parser.add_argument(
+    '--unset', 
+    required=False, 
+    help="It unsets your DNS configuration.",
+    action='store_true',
+    # type=bool
+)
+
 # Use default DNS configuration:
 parser.add_argument(
     '--default', 
