@@ -15,14 +15,22 @@ parser.add_argument(
     required=False,
     type=str,
     default='',
-    help="Path to custom DNS configuration. The JSON config file shold be have one two keys named `nameserver1` and `nameserver2`.",
+    help="It sets the given servers' addresses in configuration file. The JSON config file shold be have one two keys named `nameserver1` and `nameserver2`.",
 )
+
+# parser.add_argument(
+#     '-s',
+#     '--set',
+#     type=str,
+#     default='',
+#     help="It sets the DNS by given DNS name as input. If you do not give the name it automatically sets the first DNS configuration in /etc/dummy-dns/config.json file."
+# )
 
 # Use default DNS configuration:
 parser.add_argument(
     '--default', 
     required=False, 
-    help="Use default configuration, currently Shekan is supported.",
+    help="It will use the default DNS servers and currently Shekan DNS is supported.",
     action='store_true',
     # type=bool
 )
@@ -31,7 +39,7 @@ parser.add_argument(
 parser.add_argument(
     '--reset', 
     required=False, 
-    help="Reset your DNS configuration.",
+    help="Reset your DNS configuration to system default.",
     action='store_true',
     # type=bool
 )
@@ -40,7 +48,7 @@ parser.add_argument(
 parser.add_argument(
     '-fr',
     '--force-reset', 
-    help="It re-creates and resets your default DNS configurations.",
+    help="It re-creates and resets your default DNS configurations. Be carefull to use this option, It will replace the default DNS setting saved during installation. Use this command when you sure about resolv.conf file is in its default.",
     action='store_true',
     # type=bool
 )
@@ -48,7 +56,7 @@ parser.add_argument(
 parser.add_argument(
     '-cd',
     '--check-dummy',
-    help='Check dns is affected or not.',
+    help='Check DNS is affected or not.',
     action='store_true'
 )
 
@@ -63,9 +71,9 @@ if __name__ == "__main__":
         
     app = main(args)
     
-    app.dns_handler.dns_config_path = './test/dummy/config.json'
-    app.dns_handler.app_conf_path = './test/dummy/default_resolv.conf'
-    app.dns_handler.system_conf_path = './test/system/resolv.conf'
+    # app.dns_handler.dns_config_path = './config/dummy/config.json'
+    # app.dns_handler.app_conf_path = './config/dummy/default_resolv.conf'
+    # app.dns_handler.system_conf_path = './config/system/test.conf'
     
     app.run()
     
