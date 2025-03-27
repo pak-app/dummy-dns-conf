@@ -9,7 +9,7 @@ class DnsHandler:
     def __init__(self):
         
         self.DEFAULT_CONF:dict = {
-            'shekan': {
+            'shecan': {
                 'nameserver1': '178.22.122.100',
                 'nameserver2': '185.51.200.2'
             }

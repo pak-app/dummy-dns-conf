@@ -21,4 +21,20 @@ chmod +x install.sh
 
 ## Usage
 
-First of all, this package needs sudo to use it, because writing and reading the DNS configuration file 
+First of all, this package needs `sudo` to use it, because writing and reading the DNS configuration file(/etc/resolv.conf).
+
+The usage of this package and with its examples is here(don't forget the `sudo`):
+
+```bash
+dummy-dns --reset # revert system default DNS settings
+# Caution: To use this command be carefull what you gonna do, use dummy-dns --help for more information.
+dummy-dns --force-reset # saves current system DNS settings as default settings for dummy-dns
+
+dummy-dns --config-file ./config.json # set DNS servers on config.json file
+
+dummy-dns --check-dummy # Check DNS settings is set or not
+
+dummy-dns --default # set default and built-in configuration(currently Shecan DNS is supported (https://shecan.ir/).
+
+dummy-dns --unset # Set system default configuration
+```
