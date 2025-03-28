@@ -178,3 +178,7 @@ cython_debug/
 # Test directory: Ignore test files and directories
 test/
 configs/
+
+# Env files
+.env.development
+.env.production
