@@ -25,13 +25,13 @@ parser.add_argument(
     help="It sets the given servers' addresses in configuration file. The JSON config file shold be have one two keys named `nameserver1` and `nameserver2`.",
 )
 
-# parser.add_argument(
-#     '-s',
-#     '--set',
-#     type=str,
-#     default='',
-#     help="It sets the DNS by given DNS name as input. If you do not give the name it automatically sets the first DNS configuration in /etc/dummy-dns/config.json file."
-# )
+parser.add_argument(
+    '-s',
+    '--set',
+    type=str,
+    default='',
+    help="It sets the DNS by given DNS name as input. If you do not give the name it automatically sets the first DNS configuration in /etc/dummy-dns/config.json file."
+)
 
 # Unset the DNS
 parser.add_argument(

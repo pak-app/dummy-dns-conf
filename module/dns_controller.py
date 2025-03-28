@@ -22,6 +22,10 @@ class DnsController:
     def check_dummy(self):
         self.dns_handler.check_dummy()
     
+    def select_saved_server(self, name: str) -> None:
+        self.dns_handler.select_saved_server(name)
+
+    
     def run(self):
         
         if self.args.reset or self.args.unset:
