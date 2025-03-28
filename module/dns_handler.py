@@ -15,7 +15,7 @@ class DnsHandler:
             }
         }
         
-        self.app_conf_path = '/etc/dummy-dns/default_resolv.conf'
+        self.app_conf_path = '/etc/dummy-dns/default.conf'
         self.system_conf_path = '/etc/resolv.conf'
         self.dns_config_path = '/etc/dummy-dns/config.json'
         
