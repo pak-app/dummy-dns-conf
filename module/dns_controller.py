@@ -42,3 +42,6 @@ class DnsController:
         
         elif self.args.check_dummy:
             self.check_dummy()
+        
+        elif not self.args.set == '':
+            self.select_saved_server(self.args.set)
