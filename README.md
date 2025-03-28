@@ -6,7 +6,7 @@
 
 You might wonder why it’s called *dummy-dns*—instead of something more straightforward like `dns-mng`, `dns-setter`, `dns-manager`, or any other name that might sound more appropriate.
 
-Well, this name was the result of a dummy decision by an idle programmer (me 😅) who had nothing better to do and decided to build a DNS manager from scratch. I tried several ways to set DNS on my Ubuntu machine, but they didn’t work (maybe you'll have better luck! 😄), so I made this “dummy” decision to create this project—and so, *dummy-dns* was born.
+Well, this name was the result of a dumb decision by an idle programmer (me 😅) who had nothing better to do and decided to build a DNS manager from scratch. I tried several ways to set DNS on my Ubuntu machine, but they didn’t work (maybe you'll have better luck! 😄), so I made this “dumb” decision to create this project(and I like this name and it is a bit related to dumb)—and so, *dummy-dns* was born. It is not totally a dumb package, beacause you can just set and manage your DNS servers on your local machine just by your terminal easily.
 
 ## Installation
 
@@ -17,6 +17,7 @@ To install, run:
 ```bash
 git clone https://github.com/pak-app/dummy-dns-conf.git
 cd dummy-dns-conf
+pip3 install pyinstaller
 chmod +x install.sh
 ./install.sh
 ```
@@ -25,7 +26,7 @@ chmod +x install.sh
 
 Note: This tool requires `sudo` permissions because it reads and writes to the system DNS configuration file (`/etc/resolv.conf`).
 
-Here are the available commands and examples (don’t forget to use sudo):
+Here are the available commands and examples (don’t forget to use `sudo`):
 
 ```bash
 dummy-dns --reset # revert system default DNS settings
@@ -43,4 +44,4 @@ dummy-dns --unset # Set system default configuration
 
 ## Maintainer
 
-Created and maintained by Poorya.
+Created and maintained by [Poorya](https://github.com/pak-app/).
