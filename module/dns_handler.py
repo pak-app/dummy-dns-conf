@@ -1,7 +1,6 @@
 # from service import DNSService
 import json
 import os 
-import sys
 import shutil
 
 class DnsHandler:
@@ -15,22 +14,24 @@ class DnsHandler:
             }
         }
         
-        self.app_conf_path = os.getenv('DUMMY_DNS_SYSTEM_CONF_PATH')    # By default it is located at /etc/resolv.conf
-        self.system_conf_path = os.getenv('DUMMY_DNS_APP_CONF_PATH')    # By default it is located at /etc/dummy-dns/default.conf
-        self.dns_config_path = os.getenv('DUMMY_DNS_CONFIG_PATH')       # By default it is located at /etc/dummy-dns/config.json
+        # Env variables
+        self.DEFAULT_DNS_CONF_FILE_PATH = os.getenv('DUMMY_DEFAULT_DNS_CONF_FILE_PATH')    # By default it is located at /etc/resolv.conf
+        self.SYSTEM_RESOLV_CONF_FILE_PATH = os.getenv('DUMMY_SYSTEM_DNS_CONF_FILE_PATH')    # By default it is located at /etc/dummy-dns/default.conf
+        self.DNS_SERVER_CONFIG_PATH = os.getenv('DUMMY_DNS_SERVERS_CONFIG_PATH')       # By default it is located at /etc/dummy-dns/config.json
+        
         self.dns_servers_config:dict = None # It will be initialized when needs 
         
     # Reset resolv.conf file into system default
     def reset_dns(self) -> None:
         try:
-            shutil.copy(self.app_conf_path, self.system_conf_path)
+            shutil.copy(self.DEFAULT_DNS_CONF_FILE_PATH, self.SYSTEM_RESOLV_CONF_FILE_PATH)
         except Exception as error:
             print(f'Reset process failed ==> Error:{error}')
     
     # Save resolv.conf file as default conf file in /etc/dummy-dns  
     def force_save_conf(self) -> None:
         try:
-            shutil.copy(self.system_conf_path, self.app_conf_path)
+            shutil.copy(self.SYSTEM_RESOLV_CONF_FILE_PATH, self.DEFAULT_DNS_CONF_FILE_PATH)
         except Exception as error:
             print(f'Save file process failed ==> Error:{error}')
             
@@ -65,7 +66,7 @@ class DnsHandler:
     # Read /etc/resolv.conf file
     def _load_resolv_conf(self) -> list[str]:
         
-        with open(self.system_conf_path, 'r') as file:
+        with open(self.SYSTEM_RESOLV_CONF_FILE_PATH, 'r') as file:
             content = file.readlines()
             file.close()
             return content
@@ -73,7 +74,7 @@ class DnsHandler:
     # Write /etc/resolv.conf file
     def _write_resolv_conf(self, content: list[str]) -> None:
 
-        with open(self.system_conf_path, 'w') as file:
+        with open(self.SYSTEM_RESOLV_CONF_FILE_PATH, 'w') as file:
             file.writelines(content)
             file.close()
 
@@ -89,11 +90,11 @@ class DnsHandler:
     # Write configs on /etc/dummy-dns/config.json
     def _write_config_json(self):
         
-        json.dump(self.dns_servers_config, open(self.dns_config_path, 'w')) # write on config.json
+        json.dump(self.dns_servers_config, open(self.DNS_SERVER_CONFIG_PATH, 'w')) # write on config.json
     
     # Checking dummy-dns is set your DNS configurations or not
     def check_dummy(self):
-        with open(self.system_conf_path, 'r') as file:
+        with open(self.SYSTEM_RESOLV_CONF_FILE_PATH, 'r') as file:
             first_line = file.readline(-1)
             if 'dummy' in first_line:
                 print('Dummy is active.')
@@ -126,7 +127,7 @@ class DnsHandler:
     # Select saved DNS configration and server addresses from /etc/dummy-dns/config.json
     def select_saved_server(self, name: str) -> None:
                 
-        with open(self.dns_config_path, 'r') as file:
+        with open(self.DNS_SERVER_CONFIG_PATH, 'r') as file:
             self.dns_servers_config:dict = json.load(file)
             file.close()
         
