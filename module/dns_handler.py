@@ -65,7 +65,7 @@ class DnsHandler:
         
     def check_dummy(self):
         with open(self.system_conf_path, 'r') as file:
-            first_line = file.readline(0)
+            first_line = file.readline(-1)
             if 'dummy' in first_line:
                 print('Dummy is active.')
             else:
