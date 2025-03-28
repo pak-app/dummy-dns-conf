@@ -81,9 +81,9 @@ if __name__ == "__main__":
         
     app = main(args)
     
-    app.dns_handler.dns_config_path = './configs/dummy/config.json'
-    app.dns_handler.app_conf_path = './configs/dummy/default_resolv.conf'
-    app.dns_handler.system_conf_path = './configs/system/test.conf'
+    # app.dns_handler.dns_config_path = './configs/dummy/config.json'
+    # app.dns_handler.app_conf_path = './configs/dummy/default_resolv.conf'
+    # app.dns_handler.system_conf_path = './configs/system/test.conf'
     
     app.run()
     
