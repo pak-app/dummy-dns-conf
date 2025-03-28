@@ -1,6 +1,13 @@
 import argparse
 from module.dns_controller import DnsController as main
 import os
+from dotenv import load_dotenv
+
+# Load environment variables
+def env_manager() -> None:
+    
+    if os.getenv('PYTHON_ENV_ENRITONMENT_MODE') == 'production':
+        load_dotenv('.env.production')
 
 # Define argument parser
 parser = argparse.ArgumentParser(
