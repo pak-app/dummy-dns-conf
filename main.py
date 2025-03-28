@@ -6,8 +6,16 @@ from dotenv import load_dotenv
 # Load environment variables
 def env_manager() -> None:
     
-    if os.getenv('DUMMY_DNS_ENV') is None:
-        load_dotenv('.env.production')
+    load_dotenv('.env') # Load app environment variables
+    app_env = os.getenv('APP_ENV') # Load application runtime environment
+    
+    # Load production environment variables
+    if app_env == 'production':
+        load_dotenv('.env.production') # prod env
+
+    # Load production environment variables
+    elif app_env == 'development':
+        load_dotenv('.env.development') # dev env
 
 # Define argument parser
 parser = argparse.ArgumentParser(
@@ -70,6 +78,7 @@ parser.add_argument(
     # type=bool
 )
 
+# Check is dummy-dns set configuration 
 parser.add_argument(
     '-cd',
     '--check-dummy',
@@ -82,6 +91,7 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
 
+    # Check if you run it as root (sudo ...)
     if os.geteuid() != 0:
         print('Please use sudo before the command.\nexit code 0')
         exit()
