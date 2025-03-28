@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # Load environment variables
 def env_manager() -> None:
     
-    if os.getenv('PYTHON_ENV_ENRITONMENT_MODE') == 'production':
+    if os.getenv('DUMMY_DNS_ENV') is None:
         load_dotenv('.env.production')
 
 # Define argument parser
@@ -86,12 +86,11 @@ if __name__ == "__main__":
         print('Please use sudo before the command.\nexit code 0')
         exit()
         
+    # Load env variables in production mode
+    env_manager()
+    
+    # Run program
     app = main(args)
-    
-    # app.dns_handler.dns_config_path = './configs/dummy/config.json'
-    # app.dns_handler.app_conf_path = './configs/dummy/default_resolv.conf'
-    # app.dns_handler.system_conf_path = './configs/system/test.conf'
-    
     app.run()
     
     

@@ -15,9 +15,9 @@ class DnsHandler:
             }
         }
         
-        self.app_conf_path = '/etc/dummy-dns/default.conf'
-        self.system_conf_path = '/etc/resolv.conf'
-        self.dns_config_path = '/etc/dummy-dns/config.json'
+        self.app_conf_path = os.getenv('DUMMY_DNS_CONFIG_PATH')
+        self.system_conf_path = os.getenv('DUMMY_DNS_APP_CONF_PATH')
+        self.dns_config_path = os.getenv('DUMMY_DNS_SYSTEM_CONF_PATH')
         
     
     def reset_dns(self) -> None:
