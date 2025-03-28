@@ -38,8 +38,8 @@ class DnsHandler:
     
     def set_default_conf(self) -> None:
         self._set_dns(
-            self.DEFAULT_CONF['nameserver1'],
-            self.DEFAULT_CONF['nameserver2']
+            self.DEFAULT_CONF['shecan']['nameserver1'],
+            self.DEFAULT_CONF['shecan']['nameserver2']
         )
     
     def load_resolv_conf(self) -> list[str]:
