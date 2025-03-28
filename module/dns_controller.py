@@ -38,7 +38,7 @@ class DnsController:
             self.set_default_conf()
         
         elif not self.args.config_file == '':
-            self.set_custom_conf(self.args.conf_file)
+            self.set_custom_conf(self.args.config_file)
         
         elif self.args.check_dummy:
             self.check_dummy()

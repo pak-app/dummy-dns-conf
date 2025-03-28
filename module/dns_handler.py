@@ -40,6 +40,10 @@ class DnsHandler:
         
         nameserver1, nameserver2 = self._load_config_json(config_path) # read nameservers from given json file
         
+        with open(self.DNS_SERVER_CONFIG_PATH, 'r') as file:
+            self.dns_servers_config:dict = json.load(file)
+            file.close()
+        
         value = input('Do you want to add this configuration to global config.json?(y/n)')
         if value.lower() == 'y':
             name = input('Set name for your DNS server:')
@@ -142,7 +146,10 @@ class DnsHandler:
     # Add server configuration to /etc/dummy-dns/config.json file
     def append_dns_server(self, config:dict, name: str) -> None:
         
+        print(config)
+        print(name)
         self.dns_servers_config[name] = config
+        self._write_config_json()
         print('DNS server added successfully.')
     
     
