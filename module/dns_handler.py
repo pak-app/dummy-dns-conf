@@ -2,7 +2,9 @@
 import json
 import os 
 import shutil
+import logging
 
+logger = logging.getLogger('dummy-dns')
 class DnsHandler:
     
     def __init__(self):
@@ -22,18 +24,13 @@ class DnsHandler:
         self.dns_servers_config:dict = None # It will be initialized when needs 
         
     # Reset resolv.conf file into system default
-    def reset_dns(self) -> None:
-        try:
-            shutil.copy(self.DEFAULT_DNS_CONF_FILE_PATH, self.SYSTEM_RESOLV_CONF_FILE_PATH)
-        except Exception as error:
-            print(f'Reset process failed ==> Error:{error}')
+    def reset_dns(self) -> None:    
+        shutil.copy(self.DEFAULT_DNS_CONF_FILE_PATH, self.SYSTEM_RESOLV_CONF_FILE_PATH)
     
     # Save resolv.conf file as default conf file in /etc/dummy-dns  
-    def force_save_conf(self) -> None:
-        try:
-            shutil.copy(self.SYSTEM_RESOLV_CONF_FILE_PATH, self.DEFAULT_DNS_CONF_FILE_PATH)
-        except Exception as error:
-            print(f'Save file process failed ==> Error:{error}')
+    def force_save_conf(self) -> None:        
+        shutil.copy(self.SYSTEM_RESOLV_CONF_FILE_PATH, self.DEFAULT_DNS_CONF_FILE_PATH)
+
             
     # Set given custom configuration with --config-file option
     def set_custom_conf(self, config_path: str) -> None:
@@ -44,9 +41,9 @@ class DnsHandler:
             self.dns_servers_config:dict = json.load(file)
             file.close()
         
-        value = input('Do you want to add this configuration to global config.json?(y/n)')
+        value = input('[INPUT] Do you want to add this configuration to global config.json?(y/n)')
         if value.lower() == 'y':
-            name = input('Set name for your DNS server:')
+            name = input('[INPUT] Set name for your DNS server:')
             self.append_dns_server(
                 {
                     'nameserver1': nameserver1,
@@ -56,8 +53,6 @@ class DnsHandler:
             )
         
         self._set_dns(nameserver1, nameserver2)
-        
-        print('Successfully set DNS to your custom configuration.')
 
     # Set default configuration
     def set_default_conf(self) -> None:
@@ -65,7 +60,6 @@ class DnsHandler:
             self.DEFAULT_CONF['shecan']['nameserver1'],
             self.DEFAULT_CONF['shecan']['nameserver2']
         )
-        print('Successfully set DNS to Shecan configuration.')
     
     # Read /etc/resolv.conf file
     def _load_resolv_conf(self) -> list[str]:
@@ -101,9 +95,9 @@ class DnsHandler:
         with open(self.SYSTEM_RESOLV_CONF_FILE_PATH, 'r') as file:
             first_line = file.readline(-1)
             if 'dummy' in first_line:
-                print('Dummy is active.')
+                logger.info('Dummy is active.')
             else:
-                print('Dummy is not active.')
+                logger.info('Dummy is not active.')
     
     # Algorithm of setting DNS
     def _set_dns(self, nameserver1:str, nameserver2:str):
@@ -141,7 +135,7 @@ class DnsHandler:
         nameserver1 = self.dns_servers_config[name]['nameserver1']
         nameserver2 = self.dns_servers_config[name]['nameserver2']
         self._set_dns(nameserver1, nameserver2)
-        print(f'Successfully set DNS to {name} configuration.')
+        logger.info(f'Successfully set DNS to {name} configuration.')
 
     # Add server configuration to /etc/dummy-dns/config.json file
     def append_dns_server(self, config:dict, name: str) -> None:
@@ -150,6 +144,6 @@ class DnsHandler:
         print(name)
         self.dns_servers_config[name] = config
         self._write_config_json()
-        print('DNS server added successfully.')
+        logger.info(f'{name} DNS server added successfully.')
     
     
