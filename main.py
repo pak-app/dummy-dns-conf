@@ -13,16 +13,17 @@ logger = logging.getLogger(os.getenv('APP_LOG_NAME'))
 
 # Load environment variables
 def env_manager() -> None:
-    
-    load_dotenv('.env') # Load app environment variables
-    app_env = os.getenv('APP_ENV') # Load application runtime environment
+    # Load application runtime environment
+    # This logic is choosen because during installtion APP_ENV initialized so it is on production stage,
+    # otherwise it is on development stage.
+    app_env = 'production' if os.getenv('APP_ENV') == 'production' else 'development'
     
     # Load production environment variables
     if app_env == 'production':
         load_dotenv('.env.production') # prod env
 
     # Load production environment variables
-    elif app_env == 'development':
+    elif app_env is 'development':
         load_dotenv('.env.development') # dev env
 
 # Define argument parser
