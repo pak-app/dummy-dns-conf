@@ -1,9 +1,10 @@
 #!/bin/bash
 
 printf "Start installing Dummy-DNS package\n"
-# shellcheck disable=SC1091
-# source .venv/bin/activate
-# install requirements
+
+# Set APP_ENV for production
+printf "Setting up the environment..."
+export APP_ENV=production
 
 printf "Building script ...\n"
 pyinstaller --onefile main.py
@@ -18,6 +19,7 @@ if [ ! -d "/etc/dummy-dns" ]; then
     sudo mkdir /etc/dummy-dns
 fi
 
+# Backup configuration file
 sudo cp /etc/resolv.conf /etc/dummy-dns/default.conf
 
 printf "Installation is completed.\n"
