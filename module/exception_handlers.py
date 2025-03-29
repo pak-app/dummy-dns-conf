@@ -20,7 +20,9 @@ def handle_exceptions(
                 # Check if successful_message is not empty
                 if not successful_message is None:
                     # See the function structure for more information about its logic
-                    _handle_dynamic_string_formatting(successful_message, *args, **kwargs)
+                    # *args[1:] is because of self of methods, if method has a param like name,
+                    # *args will be like this (<Object blau, blau, blau...>, 'value of name')
+                    _handle_dynamic_string_formatting(successful_message, *args[1:], **kwargs)
                 return result
             
             except Exception as error:
@@ -33,8 +35,8 @@ def handle_exceptions(
 # If it is available, i will put the value on it
 # If it is not it will logs the common message
 def _handle_dynamic_string_formatting(message:str, *args, **kwargs) -> None:
-    try: 
+    try:
         formatted_message = message.format(*args, **kwargs)
         logger.info(formatted_message)
-    except Exception as error:
+    except Exception:
         logger.info(message)

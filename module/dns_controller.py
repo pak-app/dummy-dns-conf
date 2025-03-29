@@ -52,8 +52,8 @@ class DnsController:
     
     # Select DNS configuration form /etc/dummy-dns/config.json by its name
     @handle_exceptions(
-        successful_message='{name} DNS configuration is set successfully.',
-        error_message='Faild to set {name} DNS configuration. Please check the error and try again.'
+        successful_message='{} DNS configuration is set successfully.',
+        error_message='Faild to set {} DNS configuration. Please check the error and try again.'
     )
     def select_saved_server(self, name: str) -> None:
         self.dns_handler.select_saved_server(name)
