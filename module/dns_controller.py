@@ -1,7 +1,7 @@
 from .dns_handler import DnsHandler
 import logging
 import os
-from exception_handlers import handle_exceptions
+from .exception_handlers import handle_exceptions
 
 logger = logging.getLogger(os.getenv('APP_LOG_NAME'))
 class DnsController:
