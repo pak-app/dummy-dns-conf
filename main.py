@@ -2,6 +2,14 @@ import argparse
 from module.dns_controller import DnsController as main
 import os
 from dotenv import load_dotenv
+import logging
+
+# Basic logging configuration
+logging.basicConfig(
+    level=logging.INFO,  # Set the minimum logging level
+    format="[%(levelname)s]: %(message)s",  # Log format
+)
+logger = logging.getLogger(os.getenv('APP_LOG_NAME'))
 
 # Load environment variables
 def env_manager() -> None:
@@ -93,8 +101,7 @@ if __name__ == "__main__":
 
     # Check if you run it as root (sudo ...)
     if os.geteuid() != 0:
-        print('Please use sudo before the command.\nexit code 0')
-        exit()
+        logger.error('Please use sudo before the command. Try with sudo again.')
         
     # Load env variables in production mode
     env_manager()
