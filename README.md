@@ -22,6 +22,104 @@ chmod +x install.sh
 ./install.sh
 ```
 
+- **Note: DO NOT FORGOT TO SET PRODUCTION ENV VARIABLES!!!**(`.env.production`)
+
+---
+
+## 📄 Environment Configuration Guide
+
+To manage different environments (e.g., development and production), `Dummy-DNS` uses `.env` files to store sensitive information such as API keys, DNS configuration paths, and other environment-specific settings.
+
+---
+
+## 🗂️ Supported Environment Files
+
+### 1. `.env.development`
+
+- Used for local development and testing.
+- Contains environment-specific variables required during development.
+
+### 2. `.env.production`
+
+- Used for deployment to production environments.
+- Contains production-specific variables that should not be exposed publicly.
+
+---
+
+## ⚙️ Environment Variable Structure
+
+The format of both `.env.development` and `.env.production` follows this pattern:
+
+```bash
+# Application Configuration
+APP_ENV=development         # or production(Required)
+
+# DNS Configuration Paths (Required)
+DUMMY_DNS_SERVERS_CONFIG_PATH=/etc/dummy-dns/config.json
+DUMMY_DEFAULT_DNS_CONF_FILE_PATH=/etc/dummy-dns/default.conf
+DUMMY_SYSTEM_DNS_CONF_FILE_PATH=/etc/resolv.conf
+
+# Logging Configuration
+APP_LOG_NAME=dummy-dns       # Name of the logging (Required)
+LOG_LEVEL=INFO               # Can be DEBUG, INFO, WARNING, ERROR, CRITICAL
+```
+
+## 📝 `.env.development` Example
+
+```bash
+# Application Configuration
+APP_ENV=development         # or production
+
+# DNS Configuration Paths
+DUMMY_DNS_SERVERS_CONFIG_PATH=./configs/dummy/config.json
+DUMMY_DEFAULT_DNS_CONF_FILE_PATH=./configs/dummy/default.conf
+DUMMY_SYSTEM_DNS_CONF_FILE_PATH=./configs/system/resolv.conf
+
+# Logging Configuration
+APP_LOG_NAME=dummy-dns
+LOG_LEVEL=DEBUG               # Can be DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+```
+
+## 📝 `.env.production` Example
+
+```bash
+# Application Configuration
+APP_ENV=development         # or production
+
+# DNS Configuration Paths
+DUMMY_DNS_SERVERS_CONFIG_PATH=/etc/dummy-dns/config.json
+DUMMY_DEFAULT_DNS_CONF_FILE_PATH=/etc/dummy-dns/default.conf
+DUMMY_SYSTEM_DNS_CONF_FILE_PATH=/etc/resolv.conf
+
+# Logging Configuration
+APP_LOG_NAME=dummy-dns
+LOG_LEVEL=ERROR
+```
+
+## 🚀 Switching Between Environments
+
+You can control which environment file is loaded by setting the `APP_ENV` variable.
+
+**For Development:**
+
+```bash
+export APP_ENV=development
+python3 main.py
+
+```
+
+- Note: If you want to run the main.py file in development environment, you can run it without exporting `APP_ENV`(without this line: `export APP_ENV=development`), the script handles it automatically.
+
+**For Production:**
+
+```bash
+export APP_ENV=production
+python3 main.py
+```
+
+- Note: If you want to install dummy-dns on your local machine, you can do it without export `APP_ENV` too(This is embedded on the `./install.sh` script).
+
 ## 📚 Usage
 
 Note: This tool requires `sudo` permissions because it reads and writes to the system DNS configuration file (`/etc/resolv.conf`).
