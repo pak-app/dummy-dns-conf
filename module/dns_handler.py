@@ -1,10 +1,10 @@
 # from service import DNSService
 import json
-import os 
+import os
 import shutil
 import logging
+logger = logging.getLogger(os.getenv('APP_LOG_NAME'))
 
-logger = logging.getLogger('dummy-dns')
 class DnsHandler:
     
     def __init__(self):

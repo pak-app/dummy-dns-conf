@@ -8,12 +8,12 @@ logger = logging.getLogger(os.getenv('APP_LOG_NAME'))
 
 # This decorator handles the exception of DbsControllers' methods
 def handle_exceptions(
-    successful_message,
-    error_message
+    successful_message:str =None,
+    error_message:str =None
 ):
     def decorator(func):
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args: tuple, **kwargs: dict[str, any]):
             
             try:
                 result = func(*args, **kwargs)
