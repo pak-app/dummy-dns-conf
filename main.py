@@ -1,5 +1,5 @@
 import argparse
-from module.dns_controller import DnsController as main
+from modules.dns_controller import DnsController as main
 import os
 from dotenv import load_dotenv
 import logging
